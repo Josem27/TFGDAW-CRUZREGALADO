@@ -1,46 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Confirm Password') }}</div>
+<div class="login-background">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card" style="background-color: rgba(0, 0, 0, 0.8); color: #ffc107; border: none;">
+                    <div class="card-header text-center" style="font-size: 24px; font-weight: bold; color: #ffc107;">
+                        {{ __('Confirma tu correo electrónico') }}
+                    </div>
 
-                <div class="card-body">
-                    {{ __('Please confirm your password before continuing.') }}
-
-                    <form method="POST" action="{{ route('password.confirm') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                    <div class="card-body" style="color: #fff;">
+                        @if (session('resent'))
+                            <div class="alert alert-success" role="alert" style="color: #ffc107;">
+                                {{ __('Se ha enviado un nuevo enlace de verificación a tu dirección de correo electrónico.') }}
                             </div>
-                        </div>
+                        @endif
 
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Confirm Password') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+                        {{ __('Antes de continuar, por favor revisa tu correo electrónico para un enlace de verificación.') }}
+                        {{ __('Si no recibiste el correo electrónico') }},
+                        <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-link p-0 m-0 align-baseline" style="color: #ffc107;">{{ __('haz clic aquí para solicitar otro') }}</button>.
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1716,3 +1716,17 @@ section,
 .starter-section {
   /* Add your styles here */
 }
+
+.login-background {
+  background-image: url('/assets/img/loginregister-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
