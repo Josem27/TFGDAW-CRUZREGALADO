@@ -75,8 +75,26 @@
                     @if($rutinaSeleccionada)
                         <div class="rutina-detalle">
                             <h5 class="text-warning">Información de la rutina seleccionada</h5>
+                            <p><strong>Descripción:</strong> {{ $rutinaSeleccionada->descripcion ?? 'Sin descripción' }}</p>
                             <p><strong>Fecha de creación:</strong> {{ $rutinaSeleccionada->fecha_inicio }}</p>
                             <p><strong>Fecha esperada de finalización:</strong> {{ $rutinaSeleccionada->fecha_fin }}</p>
+
+                            <!-- Botones de Editar y Eliminar -->
+                            <div class="mb-3">
+                                <a href="{{ route('rutina.edit', ['id' => $rutinaSeleccionada->id_rutina]) }}"
+                                    class="btn btn-primary">Editar Rutina</a>
+
+                                <form method="POST"
+                                    action="{{ route('rutina.destroy', ['id' => $rutinaSeleccionada->id_rutina]) }}"
+                                    style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('¿Estás seguro de que deseas eliminar esta rutina?');">
+                                        Eliminar Rutina
+                                    </button>
+                                </form>
+                            </div>
 
                             <!-- Mostrar ejercicios por día -->
                             @foreach (['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'] as $dia)

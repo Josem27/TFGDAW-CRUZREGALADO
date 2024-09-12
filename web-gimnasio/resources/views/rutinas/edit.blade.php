@@ -6,37 +6,38 @@
         <div class="col-md-8">
             <div class="card" style="background-color: rgba(0, 0, 0, 0.8); color: #fff;">
                 <div class="card-header text-center" style="font-size: 24px; font-weight: bold; color: #ffc107;">
-                    Crear Rutina
+                    Editar Rutina
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('rutinas.store') }}">
+                    <form method="POST" action="{{ route('rutina.update', $rutinaSeleccionada->id_rutina) }}">
                         @csrf
+                        @method('PUT')
 
                         <!-- Nombre de la rutina -->
                         <div class="form-group mb-3">
                             <label for="nombre_rutina" class="form-label">Nombre de la Rutina</label>
-                            <input type="text" class="form-control" id="nombre_rutina" name="nombre_rutina" required>
+                            <input type="text" class="form-control" id="nombre_rutina" name="nombre_rutina"
+                                value="{{ $rutinaSeleccionada->nombre_rutina }}" required>
                         </div>
 
                         <!-- Descripcion de la rutina -->
                         <div class="form-group">
                             <label for="descripcion" class="form-label">Descripción de la Rutina</label>
-                            <textarea id="descripcion" name="descripcion" class="form-control" rows="3"
-                                placeholder="Escribe una descripción de la rutina..."></textarea>
+                            <textarea id="descripcion" name="descripcion_rutina" class="form-control" rows="3"
+                                placeholder="Escribe una descripción de la rutina...">{{ $rutinaSeleccionada->descripcion }}</textarea>
                         </div>
 
-
-                        <!-- Fecha de inicio -->
+                        <!-- Fechas -->
                         <div class="form-group mb-3">
                             <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
-                            <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
+                            <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio"
+                                value="{{ $rutinaSeleccionada->fecha_inicio }}" required>
                         </div>
-
-                        <!-- Fecha de fin -->
                         <div class="form-group mb-3">
                             <label for="fecha_fin" class="form-label">Fecha de Fin</label>
-                            <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" required>
+                            <input type="date" class="form-control" id="fecha_fin" name="fecha_fin"
+                                value="{{ $rutinaSeleccionada->fecha_fin }}">
                         </div>
 
                         <!-- Ejercicios para cada día de la semana -->
@@ -55,6 +56,35 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tabla-{{ strtolower($dia) }}">
+                                        @foreach ($ejerciciosPorDia[$dia] ?? [] as $ejercicio)
+                                            <tr>
+                                                <td>
+                                                    <select name="ejercicio_{{ strtolower($dia) }}[]" class="form-control">
+                                                        @foreach ($ejerciciosPorCategoria as $categoria => $ejercicios)
+                                                            <optgroup label="{{ $categoria }}">
+                                                                @foreach ($ejercicios as $ejercicioCategoria)
+                                                                    <option value="{{ $ejercicioCategoria->id_ejercicio }}" {{ $ejercicio->id_ejercicio == $ejercicioCategoria->id_ejercicio ? 'selected' : '' }}>
+                                                                        {{ $ejercicioCategoria->nombre_ejercicio }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </optgroup>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td><input type="number" name="series_{{ strtolower($dia) }}[]"
+                                                        class="form-control" value="{{ $ejercicio->series }}"
+                                                        placeholder="Series"></td>
+                                                <td><input type="number" name="repeticiones_{{ strtolower($dia) }}[]"
+                                                        class="form-control" value="{{ $ejercicio->repeticiones }}"
+                                                        placeholder="Repeticiones"></td>
+                                                <td><input type="number" name="minutos_{{ strtolower($dia) }}[]"
+                                                        class="form-control" value="{{ $ejercicio->minutos }}"
+                                                        placeholder="Minutos"></td>
+                                                <td><button type="button" class="btn btn-danger"
+                                                        onclick="eliminarFila(this)">Eliminar</button></td>
+                                            </tr>
+                                        @endforeach
+
                                     </tbody>
                                 </table>
 
@@ -68,7 +98,7 @@
                         <div class="form-group mt-4 text-center">
                             <button type="submit" class="btn btn-primary"
                                 style="background-color: #ffc107; border-color: #ffc107;">
-                                Guardar Rutina
+                                Guardar Cambios
                             </button>
                         </div>
                     </form>
@@ -80,7 +110,6 @@
 
 <!-- JavaScript para agregar filas dinámicamente -->
 <script>
-    // Ejercicios agrupados por categoría
     var ejerciciosPorCategoria = @json($ejerciciosPorCategoria);
 
     // Nombres personalizados de las categorías
@@ -104,8 +133,6 @@
         // Rellena el selector de ejercicios por categorías
         for (let categoria in ejerciciosPorCategoria) {
             let optgroup = document.createElement('optgroup');
-
-            // Usa el nombre personalizado si existe, si no, usa el nombre original
             optgroup.label = nombresCategorias[categoria] || categoria;
 
             ejerciciosPorCategoria[categoria].forEach(function (ejercicio) {
@@ -118,11 +145,9 @@
             selectEjercicio.appendChild(optgroup);
         }
 
-        // Añadir el select dentro del td
         tdEjercicio.appendChild(selectEjercicio);
         fila.appendChild(tdEjercicio);
 
-        // Crea una nueva fila con los campos de series, repeticiones y minutos
         fila.innerHTML += `
         <td><input type="number" name="series_${dia}[]" class="form-control" placeholder="Series"></td>
         <td><input type="number" name="repeticiones_${dia}[]" class="form-control" placeholder="Repeticiones"></td>
@@ -130,7 +155,6 @@
         <td><button type="button" class="btn btn-danger" onclick="eliminarFila(this)">Eliminar</button></td>
         `;
 
-        // Añadir la fila a la tabla
         tabla.appendChild(fila);
     }
 
@@ -138,17 +162,6 @@
         const fila = boton.parentNode.parentNode;
         fila.parentNode.removeChild(fila);
     }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        // Asegúrate de que los botones 'Añadir Ejercicio' estén activos después de que el DOM esté cargado
-        let botones = document.querySelectorAll('button[data-dia]');
-        botones.forEach(boton => {
-            boton.addEventListener('click', function () {
-                const dia = boton.getAttribute('data-dia');
-                agregarFila(dia);
-            });
-        });
-    });
 </script>
 
 @endsection

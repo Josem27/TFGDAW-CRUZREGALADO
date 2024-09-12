@@ -35,4 +35,7 @@ Route::get('/rutinas/create', [RutinaController::class, 'create'])->name('rutina
 Route::post('/rutinas/store', [RutinaController::class, 'store'])->name('rutinas.store');
 Route::get('/home', [RutinaController::class, 'index'])->name('home');
 Route::get('/rutina/show', [RutinaController::class, 'show'])->name('rutina.show');
+Route::get('/rutinas/{id}/edit', [RutinaController::class, 'edit'])->name('rutina.edit');
+Route::delete('/rutinas/{id}', [RutinaController::class, 'destroy'])->name('rutina.destroy');
+Route::put('/rutinas/{id}', [RutinaController::class, 'update'])->name('rutina.update');
 
