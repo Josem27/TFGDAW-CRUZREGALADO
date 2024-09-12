@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,23 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Obtener todas las rutinas del usuario autenticado (ejemplo)
-        $rutinas = Rutina::where('id_usuario', auth()->user()->id)->get();
-
-        // Pasar las rutinas a la vista
-        return view('home', compact('rutinas'));
+        // Mostramos la vista del perfil
+        return view('home');
     }
-
-
-    public function home()
-    {
-        $user = auth()->user();
-
-        if ($user->needsProfileCompletion()) {
-            return view('home')->with('showModal', true);
-        }
-
-        return view('home')->with('showModal', false);
-    }
-
 }

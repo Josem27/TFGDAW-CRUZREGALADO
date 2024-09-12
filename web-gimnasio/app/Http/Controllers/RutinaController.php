@@ -30,7 +30,7 @@ class RutinaController extends Controller
         }
 
         // Pasamos las variables a la vista
-        return view('home', compact('rutinas', 'rutinaSeleccionada', 'ejerciciosPorDia'));
+        return view('rutinas.index', compact('rutinas', 'rutinaSeleccionada', 'ejerciciosPorDia'));
     }
 
     private function getEjerciciosPorDia($rutina_id)
@@ -100,7 +100,7 @@ class RutinaController extends Controller
             }
         }
     
-        return redirect()->route('home')->with('success', 'Rutina creada exitosamente');
+        return redirect()->route('rutinas.index')->with('success', 'Rutina creada exitosamente');
     }
     
     public function show(Request $request)
@@ -117,7 +117,7 @@ class RutinaController extends Controller
         }
 
         // Pasar la rutina seleccionada y sus ejercicios a la vista
-        return view('home', compact('rutinaSeleccionada'));
+        return view('rutinas.index', compact('rutinaSeleccionada'));
     }
 
     public function getEjerciciosPorCategoria()
@@ -149,7 +149,7 @@ class RutinaController extends Controller
         $rutina = Rutina::findOrFail($id);
         $rutina->delete();
 
-        return redirect()->route('home')->with('success', 'Rutina eliminada correctamente.');
+        return redirect()->route('rutinas.index')->with('success', 'Rutina eliminada correctamente.');
     }
     public function update(Request $request, $id)
     {
@@ -191,7 +191,7 @@ class RutinaController extends Controller
             }
         }
     
-        return redirect()->route('home')->with('success', 'Rutina actualizada correctamente.');
+        return redirect()->route('rutinas.index')->with('success', 'Rutina actualizada correctamente.');
     }
     
 }

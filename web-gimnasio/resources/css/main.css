@@ -1710,9 +1710,16 @@ section,
   color: var(--accent-color);
 }
 
-/*--------------------------------------------------------------
-# Starter Section Section
---------------------------------------------------------------*/
-.starter-section {
-  /* Add your styles here */
+.nav-tabs .nav-link {
+  color: #fff !important;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #333 !important;
+  color: #ffc107 !important;
+  border-color: transparent;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #ffc107 !important;
 }
