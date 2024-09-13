@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Usuario;
 
 class GestionController extends Controller
 {
@@ -11,15 +11,20 @@ class GestionController extends Controller
     {
         $search = $request->input('search');
 
-        $usuarios = User::whereHas('usuario', function ($query) use ($search) {
-            if ($search) {
-                $query->where('nombre', 'LIKE', "%{$search}%")
-                    ->orWhere('apellido', 'LIKE', "%{$search}%");
-            }
-        })
-        ->with('usuario')
-        ->paginate(10);
+        // Aquí obtenemos los usuarios junto con la relación 'user'
+        $usuarios = Usuario::with('user')
+            ->where('nombre', 'LIKE', "%{$search}%")
+            ->orWhere('apellido', 'LIKE', "%{$search}%")
+            ->paginate(10);
 
-        return view('gestion_usuarios.index', compact('usuarios'));
+        return view('gestion.index', compact('usuarios'));
+    }
+
+    public function destroy($id)
+    {
+        // Buscar en la tabla `usuarios` en lugar de `users`
+        $usuario = Usuario::findOrFail($id);
+        $usuario->delete();
+        return redirect()->route('gestion.usuarios.index')->with('success', 'Usuario eliminado correctamente');
     }
 }

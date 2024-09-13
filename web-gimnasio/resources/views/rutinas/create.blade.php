@@ -3,15 +3,17 @@
 @section('content')
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+    <input type="hidden" name="id_usuario" value="{{ $id_usuario }}">
+    <div class="col-md-8">
             <div class="card" style="background-color: rgba(0, 0, 0, 0.8); color: #fff;">
                 <div class="card-header text-center" style="font-size: 24px; font-weight: bold; color: #ffc107;">
                     Crear Rutina
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('rutinas.store') }}">
-                        @csrf
+                <form method="POST" action="{{ route('rutinas.store') }}">
+                @csrf
+                <input type="hidden" name="id_usuario" value="{{ $id_usuario }}">
 
                         <!-- Nombre de la rutina -->
                         <div class="form-group mb-3">
@@ -68,7 +70,7 @@
                         <div class="form-group mt-4 text-center">
                             <button type="submit" class="btn btn-warning">Guardar Rutina
                             </button>
-                            <a href="{{ route('dietas.index') }}" class="btn btn-secondary">Regresar</a>
+                            <a href="{{ route('rutinas.index', ['id_usuario' => Auth::user()->usuario->id_usuario]) }}" class="btn btn-secondary">Regresar</a>
                         </div>
                     </form>
                 </div>

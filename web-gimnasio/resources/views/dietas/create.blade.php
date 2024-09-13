@@ -2,6 +2,8 @@
 
 @section('content')
 <div class="container mt-5">
+<input type="hidden" name="id_usuario" value="{{ $id_usuario }}">
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card" style="background-color: rgba(0, 0, 0, 0.8); color: #fff;">
@@ -12,6 +14,8 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('dietas.store') }}">
                         @csrf
+                        <input type="hidden" name="id_usuario" value="{{ $id_usuario }}">
+                        <button type="submit" class="btn btn-warning">Guardar Dieta</button>
 
                         <!-- Nombre de la dieta -->
                         <div class="form-group mb-3">
@@ -73,7 +77,7 @@
                         <div class="form-group mt-4 text-center">
                             <button type="submit" class="btn btn-warning">Guardar Dieta
                             </button>
-                            <a href="{{ route('dietas.index') }}" class="btn btn-secondary">Regresar</a>
+                            <a href="{{ route('dietas.index', ['id_usuario' => Auth::user()->usuario->id_usuario]) }}" class="btn btn-secondary">Regresar</a>
                         </div>
                     </form>
                 </div>

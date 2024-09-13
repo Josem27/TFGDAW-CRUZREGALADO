@@ -11,10 +11,13 @@ use Illuminate\Support\Facades\Log;
 
 class RutinaController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $id_usuario = null)
     {
-        // Obtenemos las rutinas del usuario autenticado
-        $rutinas = Rutina::where('id_usuario', auth()->user()->id)->get();
+        // Asegurarse de que estamos usando el id_usuario de la URL
+        $idUsuarioActual = $id_usuario ?? auth()->user()->id;
+
+        // Obtenemos las rutinas del usuario seleccionado
+        $rutinas = Rutina::where('id_usuario', $idUsuarioActual)->get();
 
         // Inicializamos variables adicionales
         $rutinaSeleccionada = null;
@@ -29,15 +32,15 @@ class RutinaController extends Controller
             }
         }
 
-        // Pasamos las variables a la vista
-        return view('rutinas.index', compact('rutinas', 'rutinaSeleccionada', 'ejerciciosPorDia'));
+        // Pasamos el id_usuario a la vista junto con las otras variables
+        return view('rutinas.index', compact('rutinas', 'rutinaSeleccionada', 'ejerciciosPorDia', 'idUsuarioActual'));
     }
 
     private function getEjerciciosPorDia($rutina_id)
     {
         $diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         $ejerciciosPorDia = [];
-    
+
         foreach ($diasSemana as $dia) {
             // Incluir el pivote en la consulta para que cargue las series, repeticiones y minutos
             $ejerciciosPorDia[$dia] = DB::table('rutina_ejercicios')
@@ -46,48 +49,53 @@ class RutinaController extends Controller
                 ->where('rutina_ejercicios.id_rutina', $rutina_id)
                 ->select('ejercicios.*', 'rutina_ejercicios.series', 'rutina_ejercicios.repeticiones', 'rutina_ejercicios.minutos')
                 ->get();
-    
+
             // Log para verificar si está trayendo los ejercicios correctamente
             Log::info("Ejercicios para {$dia}: ", $ejerciciosPorDia[$dia]->toArray());
         }
-    
+
         return $ejerciciosPorDia;
     }
-    
-    public function create()
+
+    public function create($id_usuario)
     {
         // Agrupar ejercicios por categoría
         $ejerciciosPorCategoria = Ejercicio::all()->groupBy('categoria');
 
-        return view('rutinas.create', compact('ejerciciosPorCategoria'));
+        // Pasar el id_usuario a la vista
+        return view('rutinas.create', compact('ejerciciosPorCategoria', 'id_usuario'));
     }
 
     public function store(Request $request)
     {
-        dd($request->all());
+        // Mostrar los datos para depuración
+        // dd($request->all());
+
+        // Crear la rutina para el usuario seleccionado
         $rutina = new Rutina();
         $rutina->nombre_rutina = $request->input('nombre_rutina');
-        $rutina->descripcion = $request->input('descripcion_rutina'); 
+        $rutina->descripcion = $request->input('descripcion');
         $rutina->fecha_inicio = $request->input('fecha_inicio');
         $rutina->fecha_fin = $request->input('fecha_fin');
-        $rutina->id_usuario = auth()->user()->id;
+        $rutina->id_usuario = $request->input('id_usuario');  // Usar el id_usuario pasado en el formulario
         $rutina->save();
-    
-        // Días de la semana que vamos a procesar
+
+        // Obtener el id de la rutina recién creada
+        $idRutinaCreada = $rutina->id_rutina;  // Cambia esto si la clave primaria es 'id_rutina' y no 'id'
+
+        // Procesar los ejercicios por día
         $diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-    
+
         foreach ($diasSemana as $dia) {
-            // Verificar si hay ejercicios para el día
             if ($request->has("ejercicio_" . strtolower($dia))) {
                 $ejercicios = $request->input("ejercicio_" . strtolower($dia));
                 $series = $request->input("series_" . strtolower($dia));
                 $repeticiones = $request->input("repeticiones_" . strtolower($dia));
                 $minutos = $request->input("minutos_" . strtolower($dia));
-    
-                // Insertar los ejercicios para ese día
+
                 for ($i = 0; $i < count($ejercicios); $i++) {
                     DB::table('rutina_ejercicios')->insert([
-                        'id_rutina' => $rutina->id_rutina,
+                        'id_rutina' => $idRutinaCreada,  // Usar el ID recién creado
                         'id_ejercicio' => $ejercicios[$i],
                         'series' => $series[$i],
                         'repeticiones' => $repeticiones[$i],
@@ -99,10 +107,11 @@ class RutinaController extends Controller
                 }
             }
         }
-    
-        return redirect()->route('rutinas.index')->with('success', 'Rutina creada exitosamente');
+
+        // Redirigir a la página de rutinas del usuario seleccionado
+        return redirect()->route('rutinas.index', ['id_usuario' => $rutina->id_usuario])->with('success', 'Rutina creada exitosamente');
     }
-    
+
     public function show(Request $request)
     {
         $rutinaId = $request->input('rutina_id');
@@ -132,24 +141,24 @@ class RutinaController extends Controller
     {
         // Obtener la rutina seleccionada
         $rutinaSeleccionada = Rutina::findOrFail($id);
-        
+
         // Obtener los ejercicios por día
         $ejerciciosPorDia = $this->getEjerciciosPorDia($rutinaSeleccionada->id_rutina);
-        
+
         // Agrupar ejercicios por categoría
         $ejerciciosPorCategoria = $this->getEjerciciosPorCategoria();
-    
+
         // Pasar las variables a la vista
         return view('rutinas.edit', compact('rutinaSeleccionada', 'ejerciciosPorDia', 'ejerciciosPorCategoria'));
     }
-    
+
 
     public function destroy($id)
     {
         $rutina = Rutina::findOrFail($id);
         $rutina->delete();
 
-        return redirect()->route('rutinas.index')->with('success', 'Rutina eliminada correctamente.');
+        return redirect()->route('rutinas.index', ['id_usuario' => $rutina->id_usuario])->with('success', 'Rutina eliminada correctamente.');
     }
     public function update(Request $request, $id)
     {
@@ -159,23 +168,23 @@ class RutinaController extends Controller
         $rutina->fecha_inicio = $request->fecha_inicio;
         $rutina->fecha_fin = $request->fecha_fin;
         $rutina->save();
-    
+
         // Días de la semana que vamos a procesar
         $diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-    
+
         foreach ($diasSemana as $dia) {
             if ($request->has("ejercicio_" . strtolower($dia))) {
                 $ejercicios = $request->input("ejercicio_" . strtolower($dia));
                 $series = $request->input("series_" . strtolower($dia));
                 $repeticiones = $request->input("repeticiones_" . strtolower($dia));
                 $minutos = $request->input("minutos_" . strtolower($dia));
-    
+
                 // Eliminar los ejercicios anteriores y actualizarlos
                 DB::table('rutina_ejercicios')
                     ->where('id_rutina', $id)
                     ->where('dia_semana', ucfirst($dia))
                     ->delete();
-    
+
                 for ($i = 0; $i < count($ejercicios); $i++) {
                     DB::table('rutina_ejercicios')->insert([
                         'id_rutina' => $id,
@@ -190,8 +199,8 @@ class RutinaController extends Controller
                 }
             }
         }
-    
-        return redirect()->route('rutinas.index')->with('success', 'Rutina actualizada correctamente.');
+
+        return redirect()->route('rutinas.index', ['id_usuario' => $rutina->id_usuario])->with('success', 'Rutina actualizada correctamente.');
     }
-    
+
 }

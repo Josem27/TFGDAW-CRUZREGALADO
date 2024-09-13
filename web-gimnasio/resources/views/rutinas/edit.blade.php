@@ -98,7 +98,7 @@
                         <div class="form-group mt-4 text-center">
                             <button type="submit" class="btn btn-warning">Guardar Cambios
                             </button>
-                            <a href="{{ route('dietas.index') }}" class="btn btn-secondary">Regresar</a>
+                            <a href="{{ route('dietas.index', ['id_usuario' => Auth::user()->usuario->id_usuario]) }}" class="btn btn-secondary">Regresar</a>
                         </div>
                     </form>
                 </div>
