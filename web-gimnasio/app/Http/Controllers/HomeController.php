@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Mostramos la vista del perfil
-        return view('home');
-    }
+        $user = Auth::user();
+        return view('home', compact('user'));
+    }    
 }

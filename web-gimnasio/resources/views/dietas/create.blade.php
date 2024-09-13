@@ -71,10 +71,9 @@
                         @endforeach
 
                         <div class="form-group mt-4 text-center">
-                            <button type="submit" class="btn btn-primary"
-                                style="background-color: #ffc107; border-color: #ffc107;">
-                                Guardar Dieta
+                            <button type="submit" class="btn btn-warning">Guardar Dieta
                             </button>
+                            <a href="{{ route('dietas.index') }}" class="btn btn-secondary">Regresar</a>
                         </div>
                     </form>
                 </div>
@@ -98,7 +97,7 @@
         let selectAlimento = document.createElement('select');
         selectAlimento.className = 'form-control';
         selectAlimento.name = 'alimento_' + dia + '[]';
-        selectAlimento.onchange = function() { actualizarCalorias(fila, dia); };
+        selectAlimento.onchange = function () { actualizarCalorias(fila, dia); };
 
         // Rellena el selector de alimentos por tipos sin mostrar el tipo explícitamente
         for (let tipo in alimentosPorTipo) {
@@ -166,7 +165,7 @@
     function actualizarTotalCalorias(dia) {
         let totalCalorias = 0;
         const filas = document.querySelectorAll(`#tabla-${dia} .calorias`);
-        filas.forEach(function(td) {
+        filas.forEach(function (td) {
             totalCalorias += parseFloat(td.textContent) || 0;
         });
 
@@ -176,7 +175,8 @@
 
 <style>
     .total-calorias-wrapper {
-        margin-top: -10px;  /* Ajuste para estar justo debajo de la tabla */
+        margin-top: -10px;
+        /* Ajuste para estar justo debajo de la tabla */
         text-align: right;
         font-size: 16px;
     }

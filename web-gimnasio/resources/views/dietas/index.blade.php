@@ -34,12 +34,12 @@
                         <p><strong>Fecha de fin:</strong> {{ $dietaSeleccionada->fecha_fin }}</p>
 
                         <div class="mb-3">
-                            <a href="{{ route('dietas.edit', ['id' => $dietaSeleccionada->id_dieta]) }}" class="btn btn-primary">Editar Dieta</a>
+                            <a href="{{ route('dietas.edit', ['id' => $dietaSeleccionada->id_dieta]) }}" class="btn btn-warning">Editar Dieta</a>
                             
                             <form method="POST" action="{{ route('dietas.destroy', ['id' => $dietaSeleccionada->id_dieta]) }}" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar esta dieta?');">
+                                <button type="submit" class="btn btn-secondary" onclick="return confirm('¿Estás seguro de que deseas eliminar esta dieta?');">
                                     Eliminar Dieta
                                 </button>
                             </form>

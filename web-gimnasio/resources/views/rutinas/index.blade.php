@@ -34,12 +34,12 @@
                         <p><strong>Fecha esperada de finalización:</strong> {{ $rutinaSeleccionada->fecha_fin }}</p>
 
                         <div class="mb-3">
-                            <a href="{{ route('rutina.edit', ['id' => $rutinaSeleccionada->id_rutina]) }}" class="btn btn-primary">Editar Rutina</a>
+                            <a href="{{ route('rutina.edit', ['id' => $rutinaSeleccionada->id_rutina]) }}" class="btn btn-warning">Editar Rutina</a>
 
                             <form method="POST" action="{{ route('rutina.destroy', ['id' => $rutinaSeleccionada->id_rutina]) }}" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar esta rutina?');">
+                                <button type="submit" class="btn btn-secondary" onclick="return confirm('¿Estás seguro de que deseas eliminar esta rutina?');">
                                     Eliminar Rutina
                                 </button>
                             </form>

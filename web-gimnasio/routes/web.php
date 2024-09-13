@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RutinaController;
 use App\Http\Controllers\DietaController;
+use App\Http\Controllers\PagosController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -24,17 +25,20 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
+
 // Ruta de inicio
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/rutinas', [RutinaController::class, 'index'])->name('rutinas.index');
 Route::get('/dietas', [DietaController::class, 'index'])->name('dietas.index');
-Route::get('/pagos', [PagoController::class, 'index'])->name('pagos.index');
-Route::get('/gestion-usuarios', [UserProfileController::class, 'index'])->name('gestion.usuarios.index');
+Route::get('/pagos', [PagosController::class, 'index'])->name('pagos.index');
+Route::get('/gestion-usuarios', [GestionController::class, 'index'])->name('gestion.usuarios.index');
 
 
 // Rutas para el perfil del usuario
-Route::get('/profile/edit', [UserProfileController::class, 'edit'])->name('profile.edit');
-Route::post('/profile/update', [UserProfileController::class, 'update'])->name('profile.update');
+Route::get('/profile/edit', [UserController::class, 'edit'])->name('profile.edit');
+Route::put('/profile/update', [UserController::class, 'update'])->name('profile.update');
+Route::get('/profile/edit', [UserController::class, 'edit'])->name('profile.edit');
 
 // Rutas para las rutinas
 Route::get('/rutinas/create', [RutinaController::class, 'create'])->name('rutina.create');
@@ -52,7 +56,7 @@ Route::put('/dietas/update/{id}', [DietaController::class, 'update'])->name('die
 
 
 // Rutas para las pagos
-
+Route::get('/pagos', [PagosController::class, 'index'])->name('pagos.index');
 
 
 // Rutas para la gestion

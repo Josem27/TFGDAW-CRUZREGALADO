@@ -66,10 +66,9 @@
                         @endforeach
 
                         <div class="form-group mt-4 text-center">
-                            <button type="submit" class="btn btn-primary"
-                                style="background-color: #ffc107; border-color: #ffc107;">
-                                Guardar Rutina
+                            <button type="submit" class="btn btn-warning">Guardar Rutina
                             </button>
+                            <a href="{{ route('dietas.index') }}" class="btn btn-secondary">Regresar</a>
                         </div>
                     </form>
                 </div>
