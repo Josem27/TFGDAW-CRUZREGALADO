@@ -1,15 +1,19 @@
+<head>
+    <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
+</head>
+
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
+<div class="container container-historial-pagos mt-5">
     @include('partials.menu')
 
-    <div class="tab-content" style="background-color: #333; color: #fff; padding: 20px; border-radius: 5px;">
+    <div class="tab-content tab-content-pagos">
         <div class="tab-pane fade show active">
-            <h3>Historial de Pagos</h3>
+            <h3 class="titulo-historial-pagos">Historial de Pagos</h3>
             <p>Aquí puedes consultar tus pagos realizados.</p>
 
-            <table class="table table-dark table-bordered">
+            <table class="table table-historial-pagos table-bordered">
                 <thead>
                     <tr>
                         <th>Fecha del Pago</th>
@@ -30,11 +34,12 @@
                 </tbody>
             </table>
         </div>
-        
+
         @if(Auth::user()->usuario->tipo_usuario == 'Administrador' || Auth::user()->usuario->tipo_usuario == 'Entrenador')
-            <h3>Añadir/Actualizar Pago</h3>
-            <form action="{{ route('pagos.store', ['id_usuario' => $id_usuario ?? Auth::user()->id]) }}" method="POST">
+            <h3 class="titulo-gestion-pagos">Añadir/Actualizar Pago</h3>
+            <form action="{{ route('pagos.store', ['id_usuario' => $idUsuarioActual]) }}" method="POST">
                 @csrf
+                <input type="hidden" name="id_usuario" value="{{ $idUsuarioActual }}">
                 <div class="form-group mb-3">
                     <label for="cantidad">Cantidad</label>
                     <input type="number" name="cantidad" class="form-control" required>
@@ -57,7 +62,7 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-warning mt-3">Guardar Pago</button>
+                <button type="submit" class="btn btn-warning btn-guardar-pago mt-3">Guardar Pago</button>
             </form>
         @endif
     </div>

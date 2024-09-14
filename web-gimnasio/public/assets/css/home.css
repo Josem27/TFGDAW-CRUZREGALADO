@@ -1,0 +1,672 @@
+/*-------MENU-----------------*/
+.nav-item.active {
+  background-color: #333;
+  color: inherit;
+}
+
+.nav-item.active a {
+  color: #ffc107 !important;
+}
+
+.nav-item a {
+  color: white; 
+}
+
+.nav-item:hover {
+  background-color: #000; 
+}
+
+.nav-tabs {
+  font-weight: bold;
+  background-color: #ffc107;
+  border-radius: 5px;
+}
+
+/*----home-----*/
+/* Estilos para la página de perfil (home.blade.php) */
+.container-profile {
+  margin-top: 5rem;
+}
+
+.card-profile {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.card-header-profile {
+  color: #ffc107;
+}
+
+.card-body-profile {
+  font-size: 1.2em; /* Aumenta el tamaño del texto */
+}
+
+.text-center-profile {
+  margin-top: 20px;
+}
+
+.btn-profile-edit {
+  background-color: #ffc107;
+  color: black;
+  font-weight: bold;
+}
+
+.btn-profile-edit:hover {
+  background-color: #e0a800;
+}
+
+/* Estilos para la foto de perfil */
+.img-profile {
+  width: 200px;
+  height: 200px;
+}
+
+.no-photo-text {
+  color: #fff;
+  text-align: center;
+}
+
+/* Flexbox */
+.d-flex-profile {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+
+/*-----edit perfil-----*/
+.container-edit-profile {
+  margin-top: 5rem;
+}
+
+.card-edit-profile {
+  background-color: #000 !important;
+  color: #fff !important;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.card-header-edit-profile {
+  color: #ffc107;
+  font-weight: bold;
+}
+
+.form-group-edit {
+  margin-bottom: 1.5rem;
+}
+
+.input-edit {
+  width: 100%;
+}
+
+.btn-edit-profile {
+  background-color: #ffc107;
+  color: black;
+}
+
+.btn-edit-profile:hover {
+  background-color: #e0a800;
+}
+
+.btn-back-profile {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-back-profile:hover {
+  background-color: #5a6268;
+}
+
+.img-profile-edit {
+  width: 200px;
+  height: 200px;
+}
+
+.card-photo-profile {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.no-photo-text-edit {
+  color: #fff;
+  text-align: center;
+}
+
+/* Flexbox */
+.d-flex-edit-profile {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+
+/*----Rutinas-----*/
+
+/* Contenedor general para las rutinas */
+.container-rutinas {
+  margin-top: 5rem;
+}
+
+/* Estilos de la tarjeta principal */
+.card-rutinas {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+/* Estilos para el título */
+.card-header-rutinas {
+  color: #ffc107;
+}
+
+/* Estilos para los botones */
+.btn-add-rutina {
+  background-color: #ffc107;
+  color: white;
+  margin-bottom: 15px;
+}
+
+.btn-add-rutina:hover {
+  background-color: #0056b3;
+}
+
+.btn-edit-rutina {
+  background-color: #ffc107;
+  color: black;
+}
+
+.btn-edit-rutina:hover {
+  background-color: #e0a800;
+}
+
+.btn-delete-rutina {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-delete-rutina:hover {
+  background-color: #5a6268;
+}
+
+/* Estilos para las tablas de ejercicios */
+.table-ejercicios {
+  background-color: #222 !important;
+  color: white !important;
+  border: 1px solid #444;
+}
+
+.table-ejercicios th {
+  background-color: #333 !important;
+}
+
+.table-ejercicios td {
+  background-color: #444 !important;
+}
+
+.text-warning-rutinas {
+  color: #ffc107;
+}
+
+/* Dropdown para seleccionar rutina */
+#rutina-select {
+  width: 100%;
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+#rutina-select option {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Ajustes adicionales */
+.rutina-detalle {
+  margin-top: 2rem;
+}
+
+.form-group-rutinas {
+  margin-bottom: 1.5rem;
+}
+
+.text-warning-rutinas h5 {
+  margin-bottom: 1rem;
+}
+
+
+/*----Editar Rutina-----*/
+
+.container-edit-rutina {
+  margin-top: 5rem !important;
+}
+
+.card-edit-rutina {
+  background-color: #333 !important;
+  color: #fff !important;
+  padding: 20px !important;
+  border-radius: 5px !important;
+}
+
+.card-header-edit-rutina {
+  font-size: 24px !important;
+  font-weight: bold !important;
+  color: #ffc107 !important;
+  text-align: center !important;
+}
+
+/* Botones */
+.btn-add-exercise {
+  background-color: #ffc107 !important;
+  color: white !important;
+}
+
+.btn-add-exercise:hover {
+  background-color: #ffc107 !important;
+}
+
+.btn-delete-exercise {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+.btn-delete-exercise:hover {
+  background-color: #c82333 !important;
+}
+
+.btn-save-rutina {
+  background-color: #ffc107 !important;
+  color: black !important;
+  font-weight: bold !important;
+}
+
+.btn-save-rutina:hover {
+  background-color: #e0a800 !important;
+}
+
+.btn-back-rutina {
+  background-color: #6c757d !important;
+  color: white !important;
+}
+
+.btn-back-rutina:hover {
+  background-color: #5a6268 !important;
+}
+
+/* Tablas de ejercicios */
+.table-exercises {
+  background-color: #222 !important;
+  color: white !important;
+  border: 1px solid #444 !important;
+}
+
+.table-exercises th {
+  background-color: #333 !important;
+  color: white !important;  
+
+}
+
+.table-exercises td {
+  background-color: #444 !important;
+}
+
+.text-warning-rutina {
+  color: #ffc107 !important;
+}
+
+/*----Crear Rutina-----*/
+
+.container-create-rutina {
+  margin-top: 5rem !important;
+}
+
+.card-create-rutina {
+  background-color: #333 !important;
+  color: #fff !important;
+  padding: 20px !important;
+  border-radius: 5px !important;
+}
+
+.card-header-create-rutina {
+  font-size: 24px !important;
+  font-weight: bold !important;
+  color: #ffc107 !important;
+  text-align: center !important;
+}
+
+/* Botones */
+.btn-add-exercise {
+  background-color: #ffc107 !important;
+  color: white !important;
+}
+
+.btn-add-exercise:hover {
+  background-color: #ffc107 !important;
+}
+
+.btn-delete-exercise {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+.btn-delete-exercise:hover {
+  background-color: #c82333 !important;
+}
+
+.btn-save-rutina {
+  background-color: #ffc107 !important;
+  color: black !important;
+  font-weight: bold !important;
+}
+
+.btn-save-rutina:hover {
+  background-color: #e0a800 !important;
+}
+
+.btn-back-rutina {
+  background-color: #6c757d !important;
+  color: white !important;
+}
+
+.btn-back-rutina:hover {
+  background-color: #5a6268 !important;
+}
+
+/* Tablas de ejercicios */
+.table-exercises {
+  background-color: #222 !important;
+  color: white !important;
+  border: 1px solid #444 !important;
+}
+
+.table-exercises th {
+  background-color: #333 !important;
+}
+
+.table-exercises td {
+  background-color: #444 !important;
+}
+
+.text-warning-rutina {
+  color: #ffc107 !important;
+}
+
+.card {
+  --bs-card-bg: #333 !important; 
+  --bs-card-color: #fff !important;
+}
+
+.table {
+  --bs-table-bg: #333 !important;
+  --bs-table-striped-bg: #444 !important;
+  --bs-table-color: #fff !important;
+  --bs-table-border-color: #6c757d !important;
+}
+
+/*----- Dietas -----*/
+.tab-content-dietas {
+  background-color: #333 !important;
+  color: #fff !important;
+  padding: 20px !important;
+  border-radius: 5px !important;
+}
+
+.form-group {
+  margin-bottom: 1.5rem !important;
+}
+
+.text-warning {
+  color: #ffc107 !important;
+}
+
+.dieta-detalle h5 {
+  color: #ffc107 !important;
+}
+
+.table-dark {
+  background-color: #333 !important;
+}
+
+.btn-primary, .btn-warning, .btn-secondary {
+  color: white !important;
+  border: none !important;
+}
+
+.total-calorias {
+  color: #ffc107 !important;
+}
+
+
+/*------- Crear Dieta ---------*/
+.card-create-dieta {
+  background-color: #333 !important;
+  color: #fff !important;
+  padding: 20px !important;
+  border-radius: 5px !important;
+}
+
+.header-create-dieta {
+  font-size: 24px !important;
+  font-weight: bold !important;
+  color: #ffc107 !important;
+}
+
+.total-calorias-wrapper {
+  margin-top: -10px !important;
+  text-align: right !important;
+  font-size: 16px !important;
+}
+
+/*---Editar Dieta ---*/
+
+.container-edit-dieta {
+  margin-top: 5rem;
+}
+
+.card-edit-dieta {
+  background-color: #333 !important;
+  color: #fff !important;
+  padding: 20px !important;
+  border-radius: 5px !important;
+}
+
+.header-edit-dieta {
+  font-size: 24px !important;
+  font-weight: bold !important;
+  color: #ffc107 !important;
+  text-align: center !important;
+}
+
+.text-warning-dieta {
+  color: #ffc107 !important;
+}
+
+.table-alimentos {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  color: #fff !important;
+}
+
+.btn-add-alimento {
+  background-color: #ffc107 !important;
+  color: black !important;
+  margin-top: 10px !important;
+}
+
+.btn-add-alimento:hover {
+  background-color: #e0a800 !important;
+}
+
+.btn-save-dieta {
+  background-color: #ffc107 !important;
+  color: #fff !important;
+  font-weight: bold !important;
+}
+
+.btn-save-dieta:hover {
+  background-color: #e0a800 !important;
+}
+
+.btn-back-dieta {
+  background-color: #6c757d !important;
+  color: white !important;
+}
+
+.btn-back-dieta:hover {
+  background-color: #5a6268 !important;
+}
+
+/*------Pagos ---*/
+
+.container-historial-pagos {
+  margin-top: 5rem !important;
+}
+
+.tab-content-pagos {
+  background-color: #333 !important;
+  color: #fff !important;
+  padding: 20px !important;
+  border-radius: 5px !important;
+}
+
+.titulo-historial-pagos, .titulo-gestion-pagos {
+  color: #ffc107 !important;
+}
+
+.table-historial-pagos {
+  background-color: #444 !important;
+  color: #fff !important;
+}
+
+.table-historial-pagos th, .table-historial-pagos td {
+  border-color: #555 !important;
+}
+
+.btn-guardar-pago {
+  background-color: #ffc107 !important;
+  color: black !important;
+  font-weight: bold !important;
+}
+
+.btn-guardar-pago:hover {
+  background-color: #e0a800 !important;
+}
+
+
+/*------------- gestion -------------- */
+
+/* Contenedor principal */
+.container-gestion-usuarios {
+  margin-top: 5rem;
+}
+
+/* Estilos para la tarjeta de gestión de usuarios */
+.card-gestion-usuarios {
+  background-color: #333 !important;
+  color: #fff !important;
+  padding: 20px !important;
+  border-radius: 5px !important;
+}
+
+/* Estilos para el encabezado de la tarjeta */
+.header-gestion-usuarios {
+  color: #ffc107 !important;
+  font-size: 24px !important;
+  font-weight: bold !important;
+  text-align: center !important;
+}
+
+/* Estilos para el input de búsqueda */
+.input-group .form-control {
+  background-color: #222 !important;
+  border: 1px solid #555 !important;
+  color: #fff !important;
+}
+
+/* Botón de búsqueda */
+.input-group .btn-warning {
+  background-color: #ffc107 !important;
+  color: black !important;
+}
+
+/* Estilos de la tabla */
+.table-dark {
+  background-color: #222 !important;
+  color: #fff !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #282828 !important;
+}
+
+.table thead th {
+  color: #ffc107 !important;
+  cursor: pointer;
+}
+
+.table td {
+  vertical-align: middle !important;
+}
+
+/* Botones de gestión */
+.btn-info {
+  background-color: #17a2b8 !important;
+  border-color: #17a2b8 !important;
+  color: white !important;
+}
+
+.btn-success {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+  color: white !important;
+}
+
+.btn-primary {
+  background-color: #007bff !important;
+  border-color: #007bff !important;
+  color: white !important;
+}
+
+.btn-danger {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  color: white !important;
+}
+
+.btn-sm {
+  padding: .25rem .5rem !important;
+  font-size: .875rem !important;
+  line-height: 1.5 !important;
+}
+
+/* Estilos para el selector de tipo de usuario */
+select.form-control-sm {
+  background-color: #444 !important;
+  color: #fff !important;
+  border: 1px solid #555 !important;
+}
+
+/* Paginación */
+.pagination {
+  justify-content: center !important;
+}
+
+.pagination .page-item .page-link {
+  background-color: #444 !important;
+  color: #ffc107 !important;
+  border: 1px solid #555 !important;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #ffc107 !important;
+  color: black !important;
+  border-color: #ffc107 !important;
+}
+
+.pagination .page-item:hover .page-link {
+  background-color: #e0a800 !important;
+  color: black !important;
+}

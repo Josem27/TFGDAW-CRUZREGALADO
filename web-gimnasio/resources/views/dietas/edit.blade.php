@@ -1,11 +1,15 @@
+<head>
+    <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
+</head>
+
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
+<div class="container container-edit-dieta mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card" style="background-color: rgba(0, 0, 0, 0.8); color: #fff;">
-                <div class="card-header text-center" style="font-size: 24px; font-weight: bold; color: #ffc107;">
+            <div class="card card-edit-dieta">
+                <div class="card-header text-center header-edit-dieta">
                     Editar Dieta
                 </div>
 
@@ -43,9 +47,9 @@
                         <!-- Alimentos para cada día de la semana -->
                         @foreach (['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'] as $dia)
                             <div class="form-group mb-3">
-                                <h5 class="text-warning">{{ $dia }}</h5>
+                                <h5 class="text-warning-dieta">{{ $dia }}</h5>
 
-                                <table class="table table-dark table-bordered">
+                                <table class="table table-alimentos table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Alimento</th>
@@ -88,7 +92,7 @@
                                     </tbody>
                                 </table>
 
-                                <button type="button" class="btn btn-success"
+                                <button type="button" class="btn btn-add-alimento"
                                     onclick="agregarFila('{{ strtolower($dia) }}')">
                                     Añadir Alimento
                                 </button>
@@ -96,9 +100,8 @@
                         @endforeach
 
                         <div class="form-group mt-4 text-center">
-                            <button type="submit" class="btn btn-warning">Guardar Cambios
-                            </button>
-                            <a href="{{ route('dietas.index', ['id_usuario' => Auth::user()->usuario->id_usuario]) }}" class="btn btn-secondary">Regresar</a>
+                            <button type="submit" class="btn btn-save-dieta">Guardar Cambios</button>
+                            <a href="{{ route('dietas.index', ['id_usuario' => Auth::user()->usuario->id_usuario]) }}" class="btn btn-back-dieta">Regresar</a>
                         </div>
                     </form>
                 </div>

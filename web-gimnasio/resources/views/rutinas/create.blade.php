@@ -1,19 +1,23 @@
+<head>
+    <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
+</head>
+
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
+<div class="container container-create-rutina">
     <div class="row justify-content-center">
-    <input type="hidden" name="id_usuario" value="{{ $id_usuario }}">
-    <div class="col-md-8">
-            <div class="card" style="background-color: rgba(0, 0, 0, 0.8); color: #fff;">
-                <div class="card-header text-center" style="font-size: 24px; font-weight: bold; color: #ffc107;">
+        <input type="hidden" name="id_usuario" value="{{ $id_usuario }}">
+        <div class="col-md-8">
+            <div class="card card-create-rutina">
+                <div class="card-header card-header-create-rutina">
                     Crear Rutina
                 </div>
 
                 <div class="card-body">
-                <form method="POST" action="{{ route('rutinas.store') }}">
-                @csrf
-                <input type="hidden" name="id_usuario" value="{{ $id_usuario }}">
+                    <form method="POST" action="{{ route('rutinas.store') }}">
+                        @csrf
+                        <input type="hidden" name="id_usuario" value="{{ $id_usuario }}">
 
                         <!-- Nombre de la rutina -->
                         <div class="form-group mb-3">
@@ -21,13 +25,12 @@
                             <input type="text" class="form-control" id="nombre_rutina" name="nombre_rutina" required>
                         </div>
 
-                        <!-- Descripcion de la rutina -->
+                        <!-- Descripción de la rutina -->
                         <div class="form-group">
                             <label for="descripcion" class="form-label">Descripción de la Rutina</label>
                             <textarea id="descripcion" name="descripcion" class="form-control" rows="3"
                                 placeholder="Escribe una descripción de la rutina..."></textarea>
                         </div>
-
 
                         <!-- Fecha de inicio -->
                         <div class="form-group mb-3">
@@ -44,9 +47,9 @@
                         <!-- Ejercicios para cada día de la semana -->
                         @foreach (['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'] as $dia)
                             <div class="form-group mb-3">
-                                <h5 class="text-warning">{{ $dia }}</h5>
+                                <h5 class="text-warning-rutina">{{ $dia }}</h5>
 
-                                <table class="table table-dark table-bordered">
+                                <table class="table table-exercises table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Ejercicio</th>
@@ -60,7 +63,7 @@
                                     </tbody>
                                 </table>
 
-                                <button type="button" class="btn btn-success"
+                                <button type="button" class="btn btn-add-exercise"
                                     onclick="agregarFila('{{ strtolower($dia) }}')">
                                     Añadir Ejercicio
                                 </button>
@@ -68,9 +71,9 @@
                         @endforeach
 
                         <div class="form-group mt-4 text-center">
-                            <button type="submit" class="btn btn-warning">Guardar Rutina
-                            </button>
-                            <a href="{{ route('rutinas.index', ['id_usuario' => Auth::user()->usuario->id_usuario]) }}" class="btn btn-secondary">Regresar</a>
+                            <button type="submit" class="btn btn-save-rutina">Guardar Rutina</button>
+                            <a href="{{ route('rutinas.index', ['id_usuario' => Auth::user()->usuario->id_usuario]) }}"
+                                class="btn btn-back-rutina">Regresar</a>
                         </div>
                     </form>
                 </div>
@@ -79,9 +82,8 @@
     </div>
 </div>
 
-<!-- JavaScript para agregar filas dinámicamente -->
+<!-- Aquí es donde pasamos ejerciciosPorCategoria desde el controlador -->
 <script>
-    // Ejercicios agrupados por categoría
     var ejerciciosPorCategoria = @json($ejerciciosPorCategoria);
 
     // Nombres personalizados de las categorías
@@ -105,8 +107,6 @@
         // Rellena el selector de ejercicios por categorías
         for (let categoria in ejerciciosPorCategoria) {
             let optgroup = document.createElement('optgroup');
-
-            // Usa el nombre personalizado si existe, si no, usa el nombre original
             optgroup.label = nombresCategorias[categoria] || categoria;
 
             ejerciciosPorCategoria[categoria].forEach(function (ejercicio) {
@@ -119,19 +119,16 @@
             selectEjercicio.appendChild(optgroup);
         }
 
-        // Añadir el select dentro del td
         tdEjercicio.appendChild(selectEjercicio);
         fila.appendChild(tdEjercicio);
 
-        // Crea una nueva fila con los campos de series, repeticiones y minutos
         fila.innerHTML += `
         <td><input type="number" name="series_${dia}[]" class="form-control" placeholder="Series"></td>
         <td><input type="number" name="repeticiones_${dia}[]" class="form-control" placeholder="Repeticiones"></td>
         <td><input type="number" name="minutos_${dia}[]" class="form-control" placeholder="Minutos"></td>
-        <td><button type="button" class="btn btn-danger" onclick="eliminarFila(this)">Eliminar</button></td>
-        `;
+        <td><button type="button" class="btn btn-delete-exercise" onclick="eliminarFila(this)">Eliminar</button></td>
+    `;
 
-        // Añadir la fila a la tabla
         tabla.appendChild(fila);
     }
 
@@ -139,17 +136,6 @@
         const fila = boton.parentNode.parentNode;
         fila.parentNode.removeChild(fila);
     }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        // Asegúrate de que los botones 'Añadir Ejercicio' estén activos después de que el DOM esté cargado
-        let botones = document.querySelectorAll('button[data-dia]');
-        botones.forEach(boton => {
-            boton.addEventListener('click', function () {
-                const dia = boton.getAttribute('data-dia');
-                agregarFila(dia);
-            });
-        });
-    });
 </script>
 
 @endsection

@@ -11,7 +11,6 @@ class GestionController extends Controller
     {
         $search = $request->input('search');
 
-        // Aquí obtenemos los usuarios junto con la relación 'user'
         $usuarios = Usuario::with('user')
             ->where('nombre', 'LIKE', "%{$search}%")
             ->orWhere('apellido', 'LIKE', "%{$search}%")
@@ -20,11 +19,25 @@ class GestionController extends Controller
         return view('gestion.index', compact('usuarios'));
     }
 
-    public function destroy($id)
+    public function destroy($id_usuario)
     {
-        // Buscar en la tabla `usuarios` en lugar de `users`
-        $usuario = Usuario::findOrFail($id);
+        $usuario = Usuario::findOrFail($id_usuario);
         $usuario->delete();
         return redirect()->route('gestion.usuarios.index')->with('success', 'Usuario eliminado correctamente');
     }
+
+    public function update(Request $request, $id_usuario)
+{
+    $usuario = Usuario::findOrFail($id_usuario);
+
+    $request->validate([
+        'tipo_usuario' => 'required|in:Usuario,Entrenador,Administrador',
+    ]);
+
+    $usuario->tipo_usuario = $request->input('tipo_usuario');
+    $usuario->save();
+
+    return redirect()->route('gestion.usuarios.index')->with('success', 'Tipo de usuario actualizado correctamente.');
+}
+
 }

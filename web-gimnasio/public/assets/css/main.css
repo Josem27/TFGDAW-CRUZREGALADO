@@ -1729,4 +1729,26 @@ section,
   align-items: center;
 }
 
+/*-------MENU-----------------*/
+.nav-item.active {
+  background-color: #333;
+  color: inherit;
+}
 
+.nav-item.active a {
+  color: #ffc107 !important;
+}
+
+.nav-item a {
+  color: white; 
+}
+
+.nav-item:hover {
+  background-color: #000; 
+}
+
+.nav-tabs {
+  font-weight: bold;
+  background-color: #ffc107;
+  border-radius: 5px;
+}

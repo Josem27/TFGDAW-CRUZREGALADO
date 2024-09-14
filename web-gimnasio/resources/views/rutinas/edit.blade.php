@@ -1,11 +1,15 @@
+<head>
+    <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
+</head>
+
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
+<div class="container container-edit-rutina">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card" style="background-color: rgba(0, 0, 0, 0.8); color: #fff;">
-                <div class="card-header text-center" style="font-size: 24px; font-weight: bold; color: #ffc107;">
+            <div class="card card-edit-rutina">
+                <div class="card-header card-header-edit-rutina">
                     Editar Rutina
                 </div>
 
@@ -43,9 +47,9 @@
                         <!-- Ejercicios para cada día de la semana -->
                         @foreach (['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'] as $dia)
                             <div class="form-group mb-3">
-                                <h5 class="text-warning">{{ $dia }}</h5>
+                                <h5 class="text-warning-rutina">{{ $dia }}</h5>
 
-                                <table class="table table-dark table-bordered">
+                                <table class="table table-exercises table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Ejercicio</th>
@@ -80,7 +84,7 @@
                                                 <td><input type="number" name="minutos_{{ strtolower($dia) }}[]"
                                                         class="form-control" value="{{ $ejercicio->minutos }}"
                                                         placeholder="Minutos"></td>
-                                                <td><button type="button" class="btn btn-danger"
+                                                <td><button type="button" class="btn btn-delete-exercise"
                                                         onclick="eliminarFila(this)">Eliminar</button></td>
                                             </tr>
                                         @endforeach
@@ -88,7 +92,7 @@
                                     </tbody>
                                 </table>
 
-                                <button type="button" class="btn btn-success"
+                                <button type="button" class="btn btn-add-exercise"
                                     onclick="agregarFila('{{ strtolower($dia) }}')">
                                     Añadir Ejercicio
                                 </button>
@@ -96,9 +100,8 @@
                         @endforeach
 
                         <div class="form-group mt-4 text-center">
-                            <button type="submit" class="btn btn-warning">Guardar Cambios
-                            </button>
-                            <a href="{{ route('dietas.index', ['id_usuario' => Auth::user()->usuario->id_usuario]) }}" class="btn btn-secondary">Regresar</a>
+                            <button type="submit" class="btn btn-save-rutina">Guardar Cambios</button>
+                            <a href="{{ route('dietas.index', ['id_usuario' => Auth::user()->usuario->id_usuario]) }}" class="btn btn-back-rutina">Regresar</a>
                         </div>
                     </form>
                 </div>
@@ -106,9 +109,11 @@
         </div>
     </div>
 </div>
+@endsection
 
 <!-- JavaScript para agregar filas dinámicamente -->
 <script>
+    // Asegurarse de que la variable `ejerciciosPorCategoria` se pase desde el controlador a la vista
     var ejerciciosPorCategoria = @json($ejerciciosPorCategoria);
 
     // Nombres personalizados de las categorías
@@ -151,7 +156,7 @@
         <td><input type="number" name="series_${dia}[]" class="form-control" placeholder="Series"></td>
         <td><input type="number" name="repeticiones_${dia}[]" class="form-control" placeholder="Repeticiones"></td>
         <td><input type="number" name="minutos_${dia}[]" class="form-control" placeholder="Minutos"></td>
-        <td><button type="button" class="btn btn-danger" onclick="eliminarFila(this)">Eliminar</button></td>
+        <td><button type="button" class="btn btn-delete-exercise" onclick="eliminarFila(this)">Eliminar</button></td>
         `;
 
         tabla.appendChild(fila);
@@ -162,5 +167,3 @@
         fila.parentNode.removeChild(fila);
     }
 </script>
-
-@endsection
