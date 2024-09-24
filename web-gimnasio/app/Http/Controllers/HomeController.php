@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Crea una nueva instancia del controlador.
      *
      * @return void
      */
@@ -18,7 +18,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Muestra el home.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
