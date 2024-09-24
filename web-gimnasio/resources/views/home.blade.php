@@ -28,11 +28,11 @@
         <div class="col-md-4 d-flex">
             <div class="card card-profile h-100 w-100">
                 <div class="card-body text-center d-flex justify-content-center align-items-center">
-                    @if(Auth::user()->usuario->photo)
-                        <img src="{{ asset('storage/' . Auth::user()->usuario->photo) }}" alt="Foto de perfil"
-                             class="img-fluid rounded-circle img-profile">
+                    @if(Auth::user() && Auth::user()->usuario && Auth::user()->usuario->photo)
+                    <img src="{{ asset('storage/' . Auth::user()->usuario->photo) }}" alt="Foto de perfil"
+                        class="img-fluid rounded-circle img-profile">
                     @else
-                        <p class="no-photo-text">No tienes foto de perfil.</p>
+                    <p class="no-photo-text">No tienes foto de perfil.</p>
                     @endif
                 </div>
             </div>

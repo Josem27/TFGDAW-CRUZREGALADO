@@ -3,37 +3,38 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Login Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles authenticating users for the application and
+    | redirecting them to your home screen. The controller uses a trait
+    | to conveniently provide its functionality to your applications.
+    |
+    */
+
     use AuthenticatesUsers;
 
-    // Redireccionar después del login
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
     protected $redirectTo = '/home';
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
-    }
-
-    // Modificación para responder con JSON para APIs
-    public function login(Request $request)
-    {
-        $this->validateLogin($request);
-
-        if ($this->attemptLogin($request)) {
-            $user = $this->guard()->user();
-            $token = $user->createToken('appToken')->accessToken;
-
-            return response()->json([
-                'token' => $token,
-                'user' => $user,
-            ]);
-        }
-
-        return response()->json(['error' => 'Unauthorized'], 401);
     }
 }

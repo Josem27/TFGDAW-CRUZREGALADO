@@ -19,7 +19,6 @@
                     <form method="POST" action="{{ route('dietas.store') }}">
                         @csrf
                         <input type="hidden" name="id_usuario" value="{{ $id_usuario }}">
-                        <button type="submit" class="btn btn-warning">Guardar Dieta</button>
 
                         <div class="form-group mb-3">
                             <label for="nombre_dieta" class="form-label">Nombre de la Dieta</label>

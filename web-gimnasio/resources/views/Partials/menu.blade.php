@@ -1,5 +1,5 @@
 <head>
-<link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
 </head>
 
 <ul class="nav nav-tabs">
@@ -16,9 +16,10 @@
         <a class="nav-link" href="{{ route('pagos.index', ['id_usuario' => Auth::user()->id]) }}">Pagos</a>
     </li>
 
-    @if(Auth::user()->usuario->tipo_usuario == 'Administrador' || Auth::user()->usuario->tipo_usuario == 'Entrenador')
-        <li class="nav-item {{ request()->is('gestion-usuarios*') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('gestion.usuarios.index') }}">Gestión de Usuarios</a>
-        </li>
+    @if(Auth::user() && Auth::user()->usuario && (Auth::user()->usuario->tipo_usuario == 'Administrador' ||
+    Auth::user()->usuario->tipo_usuario == 'Entrenador'))
+    <li class="nav-item {{ request()->is('gestion-usuarios') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('gestion.usuarios.index') }}">Gestión de Usuarios</a>
+    </li>
     @endif
 </ul>

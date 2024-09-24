@@ -15,11 +15,23 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <link rel="icon" href="assets/img/logoico.png" type="image/png" />
+
+    <style>
+        .login-background {
+            background-image: url('/assets/img/user-bg.jpg');
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="login-background"
-        style="background-image: url('{{ asset('assets/img/loginregister-bg.jpg') }}'); height: 100vh; background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="login-background">
         <nav class="navbar navbar-expand-md navbar-light bg-black shadow-sm">
             <div class="container">
                 <a class="navbar-brand text-white" href="{{ url('/') }}" style="font-weight: bold;">
@@ -58,8 +70,9 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"
                                     style="background-color: #000 !important; color: #fff !important;">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                 document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                                             document.getElementById('logout-form').submit();">
                                         {{ __('Cerrar Sesión') }}
                                     </a>
 
