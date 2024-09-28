@@ -110,7 +110,7 @@
     </div>
 </div>
 
-<!-- JavaScript para agregar filas dinámicamente -->
+<!-- Js para agregar filas dinámicamente -->
 <script>
     var alimentosPorTipo = @json($alimentosPorTipo);
 

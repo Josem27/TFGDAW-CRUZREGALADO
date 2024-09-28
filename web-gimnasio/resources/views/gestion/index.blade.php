@@ -82,7 +82,7 @@
                             @endforeach
                         </tbody>
                     </table>
-
+                    <!-- Paginacion-->
                     <div class="d-flex justify-content-center">
                         {{ $usuarios->links('pagination::bootstrap-4') }}
                     </div>

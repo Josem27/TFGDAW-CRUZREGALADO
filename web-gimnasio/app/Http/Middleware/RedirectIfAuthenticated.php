@@ -8,12 +8,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Clase RedirectIfAuthenticated
+ * 
+ * Middleware para redirigir a usuarios autenticados.
+ * Si un usuario ya está autenticado, se le redirige a la página de inicio.
+ *
+ * @package App\Http\Middleware
+ */
 class RedirectIfAuthenticated
 {
     /**
-     * Handle an incoming request.
+     * Maneja una solicitud entrante.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next Próxima acción en la cadena de solicitudes.
+     * @param  string  ...$guards Tipos de autenticación a verificar.
+     * @return \Symfony\Component\HttpFoundation\Response Redirección o acceso permitido.
      */
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {

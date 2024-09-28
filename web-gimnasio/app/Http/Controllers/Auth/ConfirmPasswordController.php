@@ -5,30 +5,31 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
 
+/**
+ * Class ConfirmPasswordController
+ * 
+ * Controlador para gestionar la confirmación de contraseñas.
+ *
+ * Este controlador se encarga de manejar la confirmación de contraseñas
+ * utilizando un trait simple que incluye este comportamiento.
+ *
+ * @package App\Http\Controllers\Auth
+ */
 class ConfirmPasswordController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Confirm Password Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password confirmations and
-    | uses a simple trait to include the behavior. You're free to explore
-    | this trait and override any functions that require customization.
-    |
-    */
-
     use ConfirmsPasswords;
 
     /**
-     * Where to redirect users when the intended url fails.
+     * Redirección predeterminada cuando la URL intentada falla.
      *
      * @var string
      */
     protected $redirectTo = '/home';
 
     /**
-     * Create a new controller instance.
+     * Crea una nueva instancia del controlador.
+     *
+     * Aplica el middleware 'auth' para asegurarse de que el usuario esté autenticado.
      *
      * @return void
      */

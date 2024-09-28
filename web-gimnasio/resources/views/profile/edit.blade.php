@@ -107,7 +107,7 @@
                         <img src="{{ asset('storage/' . Auth::user()->usuario->photo) }}" alt="Foto de perfil"
                              class="img-fluid rounded-circle img-profile-edit">
                     @else
-                        <p class="no-photo-text-edit">No tienes foto de perfil.</p>
+                        <p class="no-photo-text-edit">Sin foto de perfil.</p>
                     @endif
                 </div>
             </div>

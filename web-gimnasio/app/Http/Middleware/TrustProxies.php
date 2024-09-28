@@ -5,17 +5,25 @@ namespace App\Http\Middleware;
 use Illuminate\Http\Middleware\TrustProxies as Middleware;
 use Illuminate\Http\Request;
 
+/**
+ * Clase TrustProxies
+ * 
+ * Middleware para gestionar proxies de confianza.
+ * Configura los proxies de confianza para la aplicación y define los encabezados utilizados para detectar proxies.
+ *
+ * @package App\Http\Middleware
+ */
 class TrustProxies extends Middleware
 {
     /**
-     * The trusted proxies for this application.
+     * Proxies de confianza para esta aplicación.
      *
      * @var array<int, string>|string|null
      */
     protected $proxies;
 
     /**
-     * The headers that should be used to detect proxies.
+     * Encabezados que se deben utilizar para detectar proxies.
      *
      * @var int
      */

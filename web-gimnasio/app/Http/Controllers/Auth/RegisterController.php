@@ -8,30 +8,31 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Class RegisterController
+ * 
+ * Controlador para gestionar el registro de nuevos usuarios.
+ *
+ * Este controlador se encarga de manejar el registro de nuevos usuarios, así como su validación y creación.
+ * Utiliza un trait para proporcionar esta funcionalidad sin requerir código adicional.
+ *
+ * @package App\Http\Controllers\Auth
+ */
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
     /**
-     * Where to redirect users after registration.
+     * Ruta de redirección después del registro.
      *
      * @var string
      */
     protected $redirectTo = '/home';
 
     /**
-     * Create a new controller instance.
+     * Crea una nueva instancia del controlador.
+     *
+     * Aplica el middleware 'guest' para asegurarse de que solo los usuarios no autenticados puedan acceder al registro.
      *
      * @return void
      */
@@ -41,7 +42,7 @@ class RegisterController extends Controller
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Obtiene un validador para una solicitud de registro entrante.
      *
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
@@ -56,7 +57,7 @@ class RegisterController extends Controller
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Crea una nueva instancia de usuario después de un registro válido.
      *
      * @param  array  $data
      * @return \App\Models\User

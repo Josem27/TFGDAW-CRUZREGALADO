@@ -8,12 +8,20 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Usuario;
 
+/**
+ * Clase User
+ * 
+ * Modelo para gestionar a los usuarios de la aplicación.
+ * Almacena información básica de cada usuario.
+ *
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Atributos asignables de forma masiva.
      *
      * @var array<int, string>
      */
@@ -26,7 +34,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Atributos que deben estar ocultos para la serialización.
      *
      * @var array<int, string>
      */
@@ -36,7 +44,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * Atributos que deben ser convertidos a tipos específicos.
      *
      * @var array<string, string>
      */
@@ -45,6 +53,13 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    /**
+     * Evento que se ejecuta cuando se crea un nuevo usuario.
+     * 
+     * Crea automáticamente una entrada correspondiente en la tabla 'usuarios'.
+     *
+     * @return void
+     */
     protected static function booted()
     {
         static::created(function ($user) {
@@ -60,6 +75,11 @@ class User extends Authenticatable
         });
     }
 
+    /**
+     * Relación con el modelo Usuario.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function usuario()
     {
         return $this->hasOne(Usuario::class, 'id_usuario', 'id');

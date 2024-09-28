@@ -5,30 +5,35 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 
+/**
+ * Class VerificationController
+ * 
+ * Controlador para gestionar la verificación de correos electrónicos.
+ *
+ * Este controlador se encarga de manejar la verificación de correos electrónicos para cualquier
+ * usuario que se haya registrado recientemente en la aplicación. También permite reenviar los
+ * correos de verificación en caso de que el usuario no haya recibido el mensaje original.
+ *
+ * @package App\Http\Controllers\Auth
+ */
 class VerificationController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Email Verification Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling email verification for any
-    | user that recently registered with the application. Emails may also
-    | be re-sent if the user didn't receive the original email message.
-    |
-    */
-
     use VerifiesEmails;
 
     /**
-     * Where to redirect users after verification.
+     * Ruta de redirección después de la verificación.
      *
      * @var string
      */
     protected $redirectTo = '/home';
 
     /**
-     * Create a new controller instance.
+     * Crea una nueva instancia del controlador.
+     *
+     * Aplica varios middlewares:
+     * - 'auth' para asegurar que el usuario esté autenticado.
+     * - 'signed' para asegurar que el enlace de verificación esté firmado.
+     * - 'throttle' para limitar la cantidad de intentos de verificación y reenvío de correos.
      *
      * @return void
      */

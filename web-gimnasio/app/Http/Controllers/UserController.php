@@ -6,39 +6,51 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Class UserController
+ * 
+ * Controlador para gestionar el perfil de usuario.
+ *
+ * @package App\Http\Controllers
+ */
 class UserController extends Controller
 {
-    // UserController.php
-
+    /**
+     * Muestra el formulario para editar el perfil del usuario autenticado.
+     *
+     * @return \Illuminate\View\View
+     */
     public function edit()
     {
         $user = Auth::user();
-        $user->load('usuario'); // Cargamos la relación 'usuario'
+        $user->load('usuario');
 
         return view('profile.edit', compact('user'));
     }
 
+    /**
+     * Actualiza el perfil del usuario autenticado.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request)
     {
         $user = Auth::user();
 
-        // Verificar si se ha subido una nueva foto
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('photos', 'public');
 
-            // Guardar la foto en el perfil del usuario
             $user->usuario()->update([
                 'photo' => $photoPath,
             ]);
         }
 
-        // Actualizar el resto de los datos
         $user->update([
             'name' => $request->input('nick'),
             'email' => $request->input('email'),
         ]);
 
-        // Actualizar campos en la tabla 'usuarios'
         $user->usuario()->update([
             'nombre' => $request->input('nombre'),
             'apellido' => $request->input('apellido'),
@@ -48,5 +60,4 @@ class UserController extends Controller
 
         return redirect()->route('home')->with('success', 'Perfil actualizado correctamente');
     }
-
 }
