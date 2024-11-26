@@ -57,4 +57,5 @@ Route::middleware(['auth', 'ownerOrRole'])->group(function () {
     // Rutas para los pagos
     Route::post('/pagos/{id_usuario}/store', [PagosController::class, 'store'])->name('pagos.store');
     Route::get('/pagos/{id_usuario}', [PagosController::class, 'index'])->name('pagos.index');
+    Route::get('/pagos/export/{id_usuario?}', [PagosController::class, 'export'])->name('pagos.export');    
 });

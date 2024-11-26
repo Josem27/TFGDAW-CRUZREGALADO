@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pagos;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PagosExport;
 
 class PagosController extends Controller
 {
@@ -11,26 +13,26 @@ class PagosController extends Controller
     {
         // Usamos el id_usuario de la URL, y si no está, usamos el usuario autenticado.
         $idUsuarioActual = $id_usuario ?? auth()->user()->id;
-    
+
         // Obtener los pagos del usuario con el id_usuario proporcionado en la URL
         $pagos = Pagos::where('id_usuario', $idUsuarioActual)->get();
-    
+
         // Pasamos también el idUsuarioActual a la vista para que lo puedas usar.
         return view('pagos.index', compact('pagos', 'idUsuarioActual'));
-    }    
-    
+    }
+
     public function store(Request $request, $id_usuario = null)
     {
         // Si el id_usuario no se proporciona, usar el id del usuario autenticado
         $idUsuario = $request->input('id_usuario') ?? auth()->user()->id;
-    
+
         // Validar los campos de entrada
         $request->validate([
             'cantidad' => 'required|numeric',
             'método_pago' => 'required|string',
             'estado_pago' => 'required|string',
         ]);
-    
+
         // Crear un nuevo pago
         Pagos::create([
             'id_usuario' => $idUsuario, // Asegurarse de que se usa el id_usuario correcto
@@ -39,8 +41,17 @@ class PagosController extends Controller
             'método_pago' => $request->input('método_pago'),
             'estado_pago' => $request->input('estado_pago'),
         ]);
-    
+
         return redirect()->route('pagos.index', ['id_usuario' => $id_usuario])
-                         ->with('success', 'Pago registrado correctamente.');
-    }    
+            ->with('success', 'Pago registrado correctamente.');
+    }
+
+    // Función para exportar los pagos a Excel
+    public function export($id_usuario = null)
+    {
+        $idUsuarioActual = $id_usuario ?? auth()->user()->id;
+
+        // Generar el archivo Excel con los pagos del usuario
+        return Excel::download(new PagosExport, 'pagos_usuario_' . $idUsuarioActual . '.xlsx');
+    }
 }

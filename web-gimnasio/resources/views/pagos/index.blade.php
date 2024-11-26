@@ -13,6 +13,13 @@
             <h3 class="titulo-historial-pagos">Historial de Pagos</h3>
             <p>Aquí puedes consultar tus pagos realizados.</p>
 
+            <!-- Botón para exportar los pagos a Excel -->
+            <div class="mb-3">
+                <a href="{{ route('pagos.export', ['id_usuario' => $idUsuarioActual]) }}" class="btn btn-success">
+                    Exportar a Excel
+                </a>
+            </div>
+
             <table class="table table-historial-pagos table-bordered">
                 <thead>
                     <tr>
