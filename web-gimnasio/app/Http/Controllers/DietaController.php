@@ -173,8 +173,12 @@ class DietaController extends Controller
     public function destroy($id)
     {
         $dieta = Dieta::findOrFail($id);
+    
+        $idUsuario = $dieta->id_usuario;
+    
         $dieta->delete();
-
-        return redirect()->route('dietas.index')->with('success', 'Dieta eliminada exitosamente');
+    
+        return redirect()->route('dietas.index', ['id_usuario' => $idUsuario])
+            ->with('success', 'Dieta eliminada exitosamente');
     }
 }
