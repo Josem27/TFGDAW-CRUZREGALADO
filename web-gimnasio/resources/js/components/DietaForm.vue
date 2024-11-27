@@ -136,12 +136,10 @@ export default {
             return this.alimentosPorDia[dia].reduce((total, fila) => total + parseFloat(fila.calorias || 0), 0).toFixed(2);
         },
         submitForm() {
-            // Aquí enviarías el formulario, por ejemplo, con axios.
         }
     }
 };
 </script>
 
 <style scoped>
-/* Aquí van los estilos específicos para este componente */
 </style>
