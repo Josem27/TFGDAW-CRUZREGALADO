@@ -99,11 +99,47 @@ export default {
     props: ['id_usuario', 'alimentosPorTipo'],
     data() {
         return {
+            /**
+             * Nombre de la dieta.
+             * @type {string}
+             */
             nombre_dieta: '',
+
+            /**
+             * Descripción de la dieta.
+             * @type {string}
+             */
             descripcion: '',
+
+            /**
+             * Fecha de inicio de la dieta.
+             * @type {string}
+             */
             fecha_inicio: '',
+
+            /**
+             * Fecha de fin de la dieta.
+             * @type {string}
+             */
             fecha_fin: '',
+
+            /**
+             * Días de la semana en los que se estructurará la dieta.
+             * @type {Array<string>}
+             */
             diasSemana: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+
+            /**
+             * Lista de alimentos asignados por día de la semana.
+             * Cada día contiene un arreglo de alimentos con sus detalles.
+             * @type {Object}
+             * @property {Array<Object>} Lunes - Alimentos asignados para el lunes.
+             * @property {Array<Object>} Martes - Alimentos asignados para el martes.
+             * @property {Array<Object>} Miércoles - Alimentos asignados para el miércoles.
+             * @property {Array<Object>} Jueves - Alimentos asignados para el jueves.
+             * @property {Array<Object>} Viernes - Alimentos asignados para el viernes.
+             * @property {Array<Object>} Sábado - Alimentos asignados para el sábado.
+             */
             alimentosPorDia: {
                 Lunes: [],
                 Martes: [],
@@ -115,6 +151,12 @@ export default {
         };
     },
     methods: {
+        /**
+         * Agrega una nueva fila de alimento para el día especificado.
+         * 
+         * @param {string} dia - Día de la semana al que se añadirá el alimento.
+         * @returns {void}
+         */
         agregarFila(dia) {
             this.alimentosPorDia[dia].push({
                 id_alimento: '',
@@ -123,18 +165,49 @@ export default {
                 calorias: 0
             });
         },
+
+        /**
+         * Elimina una fila de alimento para el día especificado.
+         * 
+         * @param {string} dia - Día de la semana del cual se eliminará el alimento.
+         * @param {number} index - Índice del alimento a eliminar.
+         * @returns {void}
+         */
         eliminarFila(dia, index) {
             this.alimentosPorDia[dia].splice(index, 1);
         },
+
+        /**
+         * Actualiza las calorías de un alimento en función de la cantidad seleccionada.
+         * 
+         * @param {string} dia - Día de la semana del alimento.
+         * @param {number} index - Índice del alimento en el arreglo.
+         * @returns {void}
+         */
         actualizarCalorias(dia, index) {
             const fila = this.alimentosPorDia[dia][index];
             const alimentoSeleccionado = this.$refs[`alimento_${dia}_${index}`].find(option => option.value === fila.id_alimento);
             const caloriasPor100g = alimentoSeleccionado ? alimentoSeleccionado.getAttribute('data-calorias') : 0;
             fila.calorias = (caloriasPor100g * fila.cantidad) / 100;
         },
+
+        /**
+         * Calcula el total de calorías de los alimentos asignados a un día específico.
+         * 
+         * @param {string} dia - Día de la semana para el cual se calcularán las calorías totales.
+         * @returns {string} El total de calorías redondeado a dos decimales.
+         */
         calcularTotalCalorias(dia) {
             return this.alimentosPorDia[dia].reduce((total, fila) => total + parseFloat(fila.calorias || 0), 0).toFixed(2);
         },
+
+        /**
+         * Envía el formulario para guardar la dieta.
+         * 
+         * Enviar los datos al servidor.
+         * 
+         * @returns {void}
+         */
         submitForm() {
         }
     }

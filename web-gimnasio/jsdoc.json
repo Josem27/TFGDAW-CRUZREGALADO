@@ -1,0 +1,11 @@
+{
+    "source": {
+      "include": ["resources/js", "resources/js/components"],  
+      "exclude": ["node_modules"]
+    },
+    "opts": {
+      "destination": "./docs", 
+      "recurse": true,     
+      "template": "default"
+    }
+  }  

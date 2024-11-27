@@ -6,10 +6,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Controlador para gestionar las acciones del perfil de usuario.
+ *
+ * @package App\Http\Controllers
+ */
+
 class UserController extends Controller
 {
-    // UserController.php
-
+    /**
+     * Muestra el formulario de edición del perfil del usuario autenticado.
+     *
+     * @return \Illuminate\View\View Vista con los datos del perfil del usuario para editar.
+     */
     public function edit()
     {
         $user = Auth::user();
@@ -18,6 +27,12 @@ class UserController extends Controller
         return view('profile.edit', compact('user'));
     }
 
+    /**
+     * Actualiza los datos del perfil del usuario autenticado, incluyendo foto, nombre, correo, etc.
+     *
+     * @param Request $request Objeto de solicitud HTTP con los datos a actualizar.
+     * @return \Illuminate\Http\RedirectResponse Redirige a la página principal con un mensaje de éxito.
+     */
     public function update(Request $request)
     {
         $user = Auth::user();
@@ -48,5 +63,4 @@ class UserController extends Controller
 
         return redirect()->route('home')->with('success', 'Perfil actualizado correctamente');
     }
-
 }

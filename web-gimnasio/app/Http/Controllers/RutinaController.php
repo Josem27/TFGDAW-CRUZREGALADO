@@ -9,8 +9,20 @@ use App\Models\Rutina;
 use App\Models\Ejercicio;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Controlador para gestionar las rutinas de ejercicios de los usuarios.
+ *
+ * @package App\Http\Controllers
+ */
 class RutinaController extends Controller
 {
+    /**
+     * Muestra la lista de rutinas de un usuario específico.
+     *
+     * @param Request $request Objeto de solicitud HTTP para manejar las peticiones.
+     * @param int|null $id_usuario El ID del usuario, si se proporciona en la URL; de lo contrario, se usa el usuario autenticado.
+     * @return \Illuminate\View\View Vista con la lista de rutinas del usuario y los ejercicios asignados.
+     */
     public function index(Request $request, $id_usuario = null)
     {
         // Asegurarse de que estamos usando el id_usuario de la URL
@@ -36,6 +48,12 @@ class RutinaController extends Controller
         return view('rutinas.index', compact('rutinas', 'rutinaSeleccionada', 'ejerciciosPorDia', 'idUsuarioActual'));
     }
 
+    /**
+     * Obtiene los ejercicios asignados a cada día de la semana para una rutina dada.
+     *
+     * @param int $rutina_id El ID de la rutina para la cual se obtienen los ejercicios.
+     * @return array Lista de ejercicios por día de la semana.
+     */
     private function getEjerciciosPorDia($rutina_id)
     {
         $diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -57,6 +75,12 @@ class RutinaController extends Controller
         return $ejerciciosPorDia;
     }
 
+    /**
+     * Muestra el formulario para crear una nueva rutina de ejercicios.
+     *
+     * @param int $id_usuario El ID del usuario para el cual se va a crear la rutina.
+     * @return \Illuminate\View\View Vista para crear una nueva rutina.
+     */
     public function create($id_usuario)
     {
         // Agrupar ejercicios por categoría
@@ -66,6 +90,12 @@ class RutinaController extends Controller
         return view('rutinas.create', compact('ejerciciosPorCategoria', 'id_usuario'));
     }
 
+    /**
+     * Almacena una nueva rutina de ejercicios en la base de datos.
+     *
+     * @param Request $request Objeto de solicitud HTTP con los datos de la nueva rutina.
+     * @return \Illuminate\Http\RedirectResponse Redirige a la lista de rutinas con un mensaje de éxito.
+     */
     public function store(Request $request)
     {
         // Mostrar los datos para depuración
@@ -112,6 +142,12 @@ class RutinaController extends Controller
         return redirect()->route('rutinas.index', ['id_usuario' => $rutina->id_usuario])->with('success', 'Rutina creada exitosamente');
     }
 
+    /**
+     * Muestra los detalles de una rutina específica.
+     *
+     * @param Request $request Objeto de solicitud HTTP con el ID de la rutina.
+     * @return \Illuminate\View\View Vista con los detalles de la rutina seleccionada.
+     */
     public function show(Request $request)
     {
         $rutinaId = $request->input('rutina_id');
@@ -129,6 +165,11 @@ class RutinaController extends Controller
         return view('rutinas.index', compact('rutinaSeleccionada'));
     }
 
+    /**
+     * Obtiene los ejercicios agrupados por categoría.
+     *
+     * @return \Illuminate\Support\Collection Colección de ejercicios agrupados por categoría.
+     */
     public function getEjerciciosPorCategoria()
     {
         // Agrupar ejercicios por categoría
@@ -137,6 +178,12 @@ class RutinaController extends Controller
         return $ejercicios;
     }
 
+    /**
+     * Muestra el formulario para editar una rutina existente.
+     *
+     * @param int $id El ID de la rutina que se va a editar.
+     * @return \Illuminate\View\View Vista para editar la rutina seleccionada.
+     */
     public function edit($id)
     {
         // Obtener la rutina seleccionada
@@ -152,7 +199,12 @@ class RutinaController extends Controller
         return view('rutinas.edit', compact('rutinaSeleccionada', 'ejerciciosPorDia', 'ejerciciosPorCategoria'));
     }
 
-
+    /**
+     * Elimina una rutina de ejercicios.
+     *
+     * @param int $id El ID de la rutina que se va a eliminar.
+     * @return \Illuminate\Http\RedirectResponse Redirige a la lista de rutinas con un mensaje de éxito.
+     */
     public function destroy($id)
     {
         $rutina = Rutina::findOrFail($id);
@@ -160,6 +212,14 @@ class RutinaController extends Controller
 
         return redirect()->route('rutinas.index', ['id_usuario' => $rutina->id_usuario])->with('success', 'Rutina eliminada correctamente.');
     }
+
+    /**
+     * Actualiza una rutina existente en la base de datos.
+     *
+     * @param Request $request Objeto de solicitud HTTP con los datos actualizados de la rutina.
+     * @param int $id El ID de la rutina que se va a actualizar.
+     * @return \Illuminate\Http\RedirectResponse Redirige a la lista de rutinas con un mensaje de éxito.
+     */
     public function update(Request $request, $id)
     {
         $rutina = Rutina::findOrFail($id);
@@ -202,5 +262,4 @@ class RutinaController extends Controller
 
         return redirect()->route('rutinas.index', ['id_usuario' => $rutina->id_usuario])->with('success', 'Rutina actualizada correctamente.');
     }
-
 }

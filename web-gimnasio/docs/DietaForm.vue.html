@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: DietaForm.vue</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: DietaForm.vue</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>export default {
+    props: ['id_usuario', 'alimentosPorTipo'],
+    data() {
+        return {
+            /**
+             * Nombre de la dieta.
+             * @type {string}
+             */
+            nombre_dieta: '',
+
+            /**
+             * Descripción de la dieta.
+             * @type {string}
+             */
+            descripcion: '',
+
+            /**
+             * Fecha de inicio de la dieta.
+             * @type {string}
+             */
+            fecha_inicio: '',
+
+            /**
+             * Fecha de fin de la dieta.
+             * @type {string}
+             */
+            fecha_fin: '',
+
+            /**
+             * Días de la semana en los que se estructurará la dieta.
+             * @type {Array&lt;string>}
+             */
+            diasSemana: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+
+            /**
+             * Lista de alimentos asignados por día de la semana.
+             * Cada día contiene un arreglo de alimentos con sus detalles.
+             * @type {Object}
+             * @property {Array&lt;Object>} Lunes - Alimentos asignados para el lunes.
+             * @property {Array&lt;Object>} Martes - Alimentos asignados para el martes.
+             * @property {Array&lt;Object>} Miércoles - Alimentos asignados para el miércoles.
+             * @property {Array&lt;Object>} Jueves - Alimentos asignados para el jueves.
+             * @property {Array&lt;Object>} Viernes - Alimentos asignados para el viernes.
+             * @property {Array&lt;Object>} Sábado - Alimentos asignados para el sábado.
+             */
+            alimentosPorDia: {
+                Lunes: [],
+                Martes: [],
+                Miércoles: [],
+                Jueves: [],
+                Viernes: [],
+                Sábado: []
+            }
+        };
+    },
+    methods: {
+        /**
+         * Agrega una nueva fila de alimento para el día especificado.
+         * 
+         * @param {string} dia - Día de la semana al que se añadirá el alimento.
+         * @returns {void}
+         */
+        agregarFila(dia) {
+            this.alimentosPorDia[dia].push({
+                id_alimento: '',
+                cantidad: '',
+                tiempo_comida: 'desayuno',
+                calorias: 0
+            });
+        },
+
+        /**
+         * Elimina una fila de alimento para el día especificado.
+         * 
+         * @param {string} dia - Día de la semana del cual se eliminará el alimento.
+         * @param {number} index - Índice del alimento a eliminar.
+         * @returns {void}
+         */
+        eliminarFila(dia, index) {
+            this.alimentosPorDia[dia].splice(index, 1);
+        },
+
+        /**
+         * Actualiza las calorías de un alimento en función de la cantidad seleccionada.
+         * 
+         * @param {string} dia - Día de la semana del alimento.
+         * @param {number} index - Índice del alimento en el arreglo.
+         * @returns {void}
+         */
+        actualizarCalorias(dia, index) {
+            const fila = this.alimentosPorDia[dia][index];
+            const alimentoSeleccionado = this.$refs[`alimento_${dia}_${index}`].find(option => option.value === fila.id_alimento);
+            const caloriasPor100g = alimentoSeleccionado ? alimentoSeleccionado.getAttribute('data-calorias') : 0;
+            fila.calorias = (caloriasPor100g * fila.cantidad) / 100;
+        },
+
+        /**
+         * Calcula el total de calorías de los alimentos asignados a un día específico.
+         * 
+         * @param {string} dia - Día de la semana para el cual se calcularán las calorías totales.
+         * @returns {string} El total de calorías redondeado a dos decimales.
+         */
+        calcularTotalCalorias(dia) {
+            return this.alimentosPorDia[dia].reduce((total, fila) => total + parseFloat(fila.calorias || 0), 0).toFixed(2);
+        },
+
+        /**
+         * Envía el formulario para guardar la dieta.
+         * 
+         * Envía los datos al servidor.
+         * 
+         * @returns {dieta}
+         */
+        submitForm() {
+        }
+    }
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#alimentosPorDia">alimentosPorDia</a></li><li><a href="global.html#alimentosPorTipo">alimentosPorTipo</a></li><li><a href="global.html#descripcion">descripcion</a></li><li><a href="global.html#dias">dias</a></li><li><a href="global.html#diasSemana">diasSemana</a></li><li><a href="global.html#dieta">dieta</a></li><li><a href="global.html#ejercicios">ejercicios</a></li><li><a href="global.html#fecha_fin">fecha_fin</a></li><li><a href="global.html#fecha_inicio">fecha_inicio</a></li><li><a href="global.html#nombre_dieta">nombre_dieta</a></li><li><a href="global.html#rutina">rutina</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Nov 27 2024 10:57:04 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
